@@ -18,6 +18,9 @@ import { TodoComponent } from './components/todo/todo.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AuthService } from './services/auth.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddTodoComponent } from './components/add-todo/add-todo.component';
+import { EditScheduleComponent } from './components/edit-schedule/edit-schedule.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,9 @@ import { AuthService } from './services/auth.service';
     NavbarComponent,
     HomeComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    AddTodoComponent,
+    EditScheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,8 @@ import { AuthService } from './services/auth.service';
     FlashMessagesModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase, 'dashboard'),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    BrowserAnimationsModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

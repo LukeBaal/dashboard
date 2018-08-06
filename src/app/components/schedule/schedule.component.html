@@ -1,3 +1,34 @@
-<p>
-  schedule works!
-</p>
+<div class="card">
+  <div class="card-body">
+    <div class="card-title">
+      <h3>{{ today | date:'EEEE' }}</h3>
+    </div>
+    <table *ngIf="schedule?.length > 0;else noSchedule" class="table table-striped">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Time</th>
+          <th>Name</th>
+          <th>Location</th>
+          <th *ngIf="canEdit"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of schedule">
+          <td>{{ event.time }}</td>
+          <td>{{ event.name }}</td>
+          <td>{{ event.location }}</td>
+          <td *ngIf="canEdit">
+            <button class="btn btn-danger btn-sm" (click)="onDelete(todo)">
+              <i class="fa fa-times"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #noSchedule>
+  <hr>
+  <h5>Nothing today...</h5>
+</ng-template>

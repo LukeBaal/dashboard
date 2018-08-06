@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-body">
+    <div class="card-title">
+      <h3>Add Todo</h3>
+    </div>
+    <form #todoForm="ngForm" (ngSubmit)="onSubmit(todoForm)">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">Course</label>
+            <input type="text" class="form-control" name="course" #todoCourse="ngModel" [(ngModel)]="todo.course">
+          </div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" #todoName="ngModel" [(ngModel)]="todo.name" [ngClass]="{'is-invalid': todoName.errors && todoName.touched}"
+              required>
+            <div class="invalid-feedback" [hidden]="!todoName.errors?.required">Name is required</div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">Due Date</label>
+            <input type="date" class="form-control" name="duedate" #todoDuedate="ngModel" [(ngModel)]="duedate" required>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Due Time</label>
+            <input type="time" class="form-control" name="duetime" #todoDuetime="ngModel" [(ngModel)]="duetime">
+          </div>
+        </div>
+      </div>
+
+
+      <input type="submit" value="Add Todo" class="btn btn-success btn-block">
+    </form>
+  </div>
+</div>

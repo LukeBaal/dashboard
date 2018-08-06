@@ -27,15 +27,8 @@ export class TodoService {
     });
   }
 
-  getCollection() {
-    if (!this.uid) {
-      return;
-    }
-    this.todosCollection = this.afs.collection(`users/${this.uid}/todos`);
-  }
-
   getTodos(): Observable<Todo[]> {
-    this.getCollection();
+    this.todosCollection = this.afs.collection(`users/${this.uid}/todos`);
     this.todos = this.todosCollection.snapshotChanges().pipe(
       map(changes => {
         return changes.map(action => {
@@ -50,6 +43,7 @@ export class TodoService {
   }
 
   newTodo(todo: Todo) {
+    this.todosCollection = this.afs.collection(`users/${this.uid}/todos`);
     this.todosCollection.add(todo);
   }
 

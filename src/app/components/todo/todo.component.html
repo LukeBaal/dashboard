@@ -1,45 +1,33 @@
 <div class="card">
   <div class="card-body">
-    <form #todoForm="ngForm" (ngSubmit)="onSubmit(todoForm)">
-      <div class="form-group">
-        <label for="name">Course</label>
-        <input type="text" class="form-control" name="course" #todoCourse="ngModel" [ngClass]="{'is-invalid': todoCourse.errors && todoCourse.touched}"
-          [(ngModel)]="todo.course" required>
-        <div class="invalid-feedback" [hidden]="!todoCourse.errors?.required">Course is required</div>
-      </div>
-
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" name="name" #todoName="ngModel" [ngClass]="{'is-invalid': todoName.errors && todoName.touched}"
-          [(ngModel)]="todo.name" required>
-        <div class="invalid-feedback" [hidden]="!todoName.errors?.required">Name is required</div>
-      </div>
-
-      <div class="form-group">
-        <label for="name">Due Date</label>
-        <input type="date" class="form-control" name="duedate" #todoDuedate="ngModel" [ngClass]="{'is-invalid': todoDuedate.errors && todoDuedate.touched}"
-          [(ngModel)]="todo.duedate" required>
-        <div class="invalid-feedback" [hidden]="!todoName.errors?.required">Due date is required</div>
-      </div>
-
-      <input type="submit" value="Submit" class="btn btn-primary btn-block">
-    </form>
     <table *ngIf="todos?.length > 0;else noTodos" class="table table-striped">
       <thead class="thead-inverse">
         <tr>
           <th>Course</th>
           <th>Name</th>
           <th>Due Date</th>
+          <th>Due Time</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let todo of todos">
           <td>{{ todo.course }}</td>
           <td>{{ todo.name }}</td>
-          <td>{{ todo.duedate }}</td>
+          <td>{{ todo.duedate | date }}</td>
+          <td>{{ todo.duedate | date:'shortTime' }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="onDelete(todo)">
+              <i class="fa fa-times"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
+    <button class="btn btn-success btn-block" routerLink="/todo/add">
+      Add Todo
+      <i class=" fa fa-plus "></i>
+    </button>
   </div>
 </div>
 

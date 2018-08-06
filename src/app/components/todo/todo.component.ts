@@ -12,16 +12,10 @@ import { Todo } from '../../model/Todo';
 })
 export class TodoComponent implements OnInit {
   todos: Todo[];
-  todo: Todo = {
-    course: '',
-    name: '',
-    duedate: ''
-  };
 
   constructor(
     private flashMessage: FlashMessagesService,
-    private todoService: TodoService,
-    private router: Router
+    private todoService: TodoService
   ) {}
 
   ngOnInit() {
@@ -30,23 +24,13 @@ export class TodoComponent implements OnInit {
     });
   }
 
-  onSubmit({ value, valid }: { value: Todo; valid: boolean }) {
-    if (!valid) {
-      // Show error
-      this.flashMessage.show('Please fill out the form correctly', {
-        cssClass: 'alert-danger',
-        timeout: 4000
-      });
-    } else {
-      // Add new todo
-      this.todoService.newTodo(value);
-      // Show message
-      this.flashMessage.show('New todo added', {
+  onDelete(todo: Todo) {
+    if (confirm('Are you sure?')) {
+      this.todoService.deleteTodo(todo);
+      this.flashMessage.show('Todo deleted', {
         cssClass: 'alert-success',
         timeout: 4000
       });
-      // Redirect to dash
-      this.router.navigate(['/']);
     }
   }
 }

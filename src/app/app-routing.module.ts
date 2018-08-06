@@ -6,13 +6,21 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AddTodoComponent } from './components/add-todo/add-todo.component';
+import { EditScheduleComponent } from './components/edit-schedule/edit-schedule.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'todo', component: TodoComponent, canActivate: [AuthGuard] },
-  { path: 'schedule', component: ScheduleComponent, canActivate: [AuthGuard] }
+  { path: 'todo/add', component: AddTodoComponent, canActivate: [AuthGuard] },
+  { path: 'schedule', component: ScheduleComponent, canActivate: [AuthGuard] },
+  {
+    path: 'schedule/edit',
+    component: EditScheduleComponent,
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({
