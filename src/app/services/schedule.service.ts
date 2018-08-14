@@ -29,10 +29,7 @@ export class ScheduleService {
   }
 
   getSchedule(day: number): Observable<Event[]> {
-    const weekday = WeekDay[day];
-    this.scheduleCollection = this.afs.collection(
-      `users/${this.uid}/${weekday}`
-    );
+    this.scheduleCollection = this.afs.collection(`users/${this.uid}/${day}`);
     this.schedule = this.scheduleCollection.snapshotChanges().pipe(
       map(changes => {
         return changes.map(action => {
@@ -46,13 +43,13 @@ export class ScheduleService {
     return this.schedule;
   }
 
-  newSchedule(event: Event) {
-    this.scheduleCollection = this.afs.collection(`users/${this.uid}/schedule`);
+  newSchedule(day: number, event: Event) {
+    this.scheduleCollection = this.afs.collection(`users/${this.uid}/${day}`);
     this.scheduleCollection.add(event);
   }
 
-  getEvent(id: string): Observable<Event> {
-    this.eventDoc = this.afs.doc<Event>(`users/${this.uid}/schedule/${id}`);
+  getEvent(day: number, id: string): Observable<Event> {
+    this.eventDoc = this.afs.doc<Event>(`users/${this.uid}/${day}/${id}`);
     this.event = this.eventDoc.snapshotChanges().pipe(
       map(action => {
         if (action.payload.exists === false) {
@@ -68,13 +65,13 @@ export class ScheduleService {
     return this.event;
   }
 
-  updateEvent(event: Event) {
-    this.eventDoc = this.afs.doc(`users/${this.uid}/schedule/${event.id}`);
+  updateEvent(day: number, event: Event) {
+    this.eventDoc = this.afs.doc(`users/${this.uid}/${day}/${event.id}`);
     this.eventDoc.update(event);
   }
 
-  deleteEvent(event: Event) {
-    this.eventDoc = this.afs.doc(`users/${this.uid}/schedule/${event.id}`);
+  deleteEvent(day: number, event: Event) {
+    this.eventDoc = this.afs.doc(`users/${this.uid}/${day}/${event.id}`);
     this.eventDoc.delete();
   }
 }

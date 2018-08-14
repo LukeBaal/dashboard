@@ -1,32 +1,42 @@
-<div class="card">
-  <div class="card-body">
-    <div class="card-title">
-      <h3>{{ today | date:'EEEE' }}</h3>
+<div class="row">
+  <div class="btn-group btn-group-lg mb-2 col-sm-12 offset-sm-5" role="group" aria-label="Day Range">
+    <button class="btn" [ngClass]="{ 'btn-primary': range === 1, 'btn-secondary': range !== 1 }" (click)="changeRange(1)">1</button>
+    <button class="btn" [ngClass]="{ 'btn-primary': range === 5, 'btn-secondary': range !== 5 }" (click)="changeRange(5)">5</button>
+    <button class="btn" [ngClass]="{ 'btn-primary': range === 7, 'btn-secondary': range !== 7 }" (click)="changeRange(7)">7</button>
+  </div>
+  <div *ngFor="let day of week; index as i" [ngClass]="{'col-md-6': range !== 1, 'col-md-12': range === 1 }">
+    <div class="card mb-4" *ngIf="day">
+      <div class="card-body">
+        <div class="card-title">
+          <h4>{{ labels[i] }}</h4>
+        </div>
+        <table *ngIf="day.length > 0;else noSchedule" class="table table-striped">
+          <thead class="thead-inverse">
+            <tr>
+              <th>Time</th>
+              <th>Name</th>
+              <th>Location</th>
+              <th *ngIf="canEdit"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let event of day">
+              <td>{{ event.time }}</td>
+              <td>{{ event.name }}</td>
+              <td>{{ event.location }}</td>
+              <td *ngIf="canEdit">
+                <button class="btn btn-danger btn-sm" (click)="onDelete(todo)">
+                  <i class="fa fa-times"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <table *ngIf="schedule?.length > 0;else noSchedule" class="table table-striped">
-      <thead class="thead-inverse">
-        <tr>
-          <th>Time</th>
-          <th>Name</th>
-          <th>Location</th>
-          <th *ngIf="canEdit"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let event of schedule">
-          <td>{{ event.time }}</td>
-          <td>{{ event.name }}</td>
-          <td>{{ event.location }}</td>
-          <td *ngIf="canEdit">
-            <button class="btn btn-danger btn-sm" (click)="onDelete(todo)">
-              <i class="fa fa-times"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>
+
 
 <ng-template #noSchedule>
   <hr>

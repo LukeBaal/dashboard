@@ -6,15 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./edit-schedule.component.css']
 })
 export class EditScheduleComponent implements OnInit {
-  week = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday'
-  ];
+  week = [0, 1, 2, 3, 4, 5, 6];
+  range = 7;
   constructor() {}
 
   ngOnInit() {}

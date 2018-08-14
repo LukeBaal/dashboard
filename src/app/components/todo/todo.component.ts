@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
-import { Router } from '@angular/router';
 
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../model/Todo';
