@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Event } from '../../model/Event';
-import { FlashMessagesService } from 'angular2-flash-messages';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ScheduleService } from '../../services/schedule.service';
 import { WeekDay } from '@angular/common';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-schedule',
@@ -11,12 +10,17 @@ import { WeekDay } from '@angular/common';
 })
 export class ScheduleComponent implements OnInit {
   schedule = new Array(7);
-  week: Event[][];
-  labels: string[];
-  range = 5;
+  labels: string[] = new Array(7);
+
+  days = new Array(7);
+  dayLabels: string[] = new Array(7);
+  range = 7;
 
   @Input()
   canEdit = false;
+
+  @Output()
+  editEvent: EventEmitter<Event> = new EventEmitter();
 
   constructor(
     private flashMessage: FlashMessagesService,
@@ -25,26 +29,52 @@ export class ScheduleComponent implements OnInit {
 
   ngOnInit() {
     const labels = [];
+    const dayLabels = [];
     for (let i = 0; i < 7; i++) {
       this.scheduleService.getSchedule(i).subscribe(schedule => {
-        labels.push(WeekDay[i]);
+        labels[i] = WeekDay[i];
+
+        dayLabels[i] = WeekDay[i];
+        this.days[i] = this.schedule[i];
         this.schedule[i] = schedule;
       });
     }
+    this.schedule.sort((a, b) => b.day - a.day);
+
     this.labels = labels;
+    this.dayLabels = dayLabels;
+    this.changeRange(this.range);
   }
 
   changeRange(range: number) {
-    if (this.range === range) return;
-
     this.range = range;
     if (this.range === 1) {
       const today = new Date();
-      this.week = this.schedule.slice(today.getDay(), (today.getDay() + 1) % 7);
+      this.days = this.schedule.slice(today.getDay(), (today.getDay() + 1) % 7);
+      this.dayLabels = this.labels.slice(
+        today.getDay(),
+        (today.getDay() + 1) % 7
+      );
     } else if (this.range === 5) {
-      this.week = this.schedule.slice(1, 6);
+      this.days = this.schedule.slice(1, 6);
+      this.dayLabels = this.labels.slice(1, 6);
     } else if (this.range === 7) {
-      this.week = this.schedule;
+      this.days = this.schedule;
+      this.dayLabels = this.labels;
     }
+  }
+
+  onDelete(day: number, event) {
+    if (confirm('Are you sure?')) {
+      this.scheduleService.deleteEvent(day, event);
+      this.flashMessage.show('Event deleted', {
+        cssClass: 'alert-success',
+        timeout: 4000
+      });
+    }
+  }
+
+  onEdit(event: Event) {
+    this.editEvent.emit(event);
   }
 }

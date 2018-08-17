@@ -1,16 +1,22 @@
 <div class="row">
-  <div class="btn-group btn-group-lg mb-2 col-sm-12 offset-sm-5" role="group" aria-label="Day Range">
+  <div class="btn-group btn-group-lg mb-2 col-md-6" role="group" aria-label="Day Range">
     <button class="btn" [ngClass]="{ 'btn-primary': range === 1, 'btn-secondary': range !== 1 }" (click)="changeRange(1)">1</button>
     <button class="btn" [ngClass]="{ 'btn-primary': range === 5, 'btn-secondary': range !== 5 }" (click)="changeRange(5)">5</button>
     <button class="btn" [ngClass]="{ 'btn-primary': range === 7, 'btn-secondary': range !== 7 }" (click)="changeRange(7)">7</button>
   </div>
-  <div *ngFor="let day of week; index as i" [ngClass]="{'col-md-6': range !== 1, 'col-md-12': range === 1 }">
-    <div class="card mb-4" *ngIf="day">
+  <div class="col-md-6 text-right">
+    <a class="btn btn-warning" routerLink="/schedule/edit" *ngIf="!canEdit">
+      <i class="fa fa-pencil"></i>
+    </a>
+    <a class="btn btn-primary" routerLink="/schedule" *ngIf="canEdit">Back</a>
+  </div>
+  <div *ngFor="let day of days; index as i" [ngClass]="{'col-md-6': range !== 1, 'col-md-12': range === 1 }">
+    <div class="card mb-4" *ngIf="day && day.length > 0">
       <div class="card-body">
         <div class="card-title">
-          <h4>{{ labels[i] }}</h4>
+          <h4>{{ dayLabels[i] }}</h4>
         </div>
-        <table *ngIf="day.length > 0;else noSchedule" class="table table-striped">
+        <table *ngIf="day.length > 0" class="table table-striped">
           <thead class="thead-inverse">
             <tr>
               <th>Time</th>
@@ -25,9 +31,14 @@
               <td>{{ event.name }}</td>
               <td>{{ event.location }}</td>
               <td *ngIf="canEdit">
-                <button class="btn btn-danger btn-sm" (click)="onDelete(todo)">
-                  <i class="fa fa-times"></i>
-                </button>
+                <div class="btn-group-vertical">
+                  <button class="btn btn-warning btn-sm" (click)="onEdit(event)">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="onDelete(i, event)">
+                    <i class="fa fa-times"></i>
+                  </button>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -36,9 +47,3 @@
     </div>
   </div>
 </div>
-
-
-<ng-template #noSchedule>
-  <hr>
-  <h5>Nothing today...</h5>
-</ng-template>

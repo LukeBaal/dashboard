@@ -1,0 +1,78 @@
+<app-wrapper>
+
+  <h2>Settings</h2>
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="card-title">
+        <h4>Add Link</h4>
+      </div>
+      <form #linkForm="ngForm" (ngSubmit)="onSubmit(linkForm)">
+        <div class="form-group">
+          <label for="label">Label</label>
+          <input type="text" class="form-control" name="label" #linkLabel="ngModel" [(ngModel)]="link.label" [ngClass]="{'is-invalid': linkLabel.errors && linkLabel.touched}"
+            required>
+          <div class="invalid-feedback" [hidden]="!linkLabel.errors?.required">Label is required</div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="url">URL</label>
+              <input type="text" class="form-control" name="url" #linkUrl="ngModel" [(ngModel)]="link.url" [ngClass]="{'is-invalid': linkUrl.errors && linkUrl.touched}"
+                required>
+              <div class="invalid-feedback" [hidden]="!linkUrl.errors?.required">URL is required</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="icon">Icon</label>
+              <input type="text" class="form-control" name="icon" [(ngModel)]="link.icon">
+            </div>
+          </div>
+        </div>
+
+        <input type="submit" [value]="update ? 'Edit Link' : 'Add Link'" class="btn btn-block" [ngClass]="{ 'btn-warning': update, 'btn-success': !update }">
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">
+        <h4>Links</h4>
+      </div>
+      <table class="table table-striped">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Label</th>
+            <th>URL</th>
+            <th>Icon</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let link of links">
+            <td>{{ link.label }}</td>
+            <td>
+              <a [href]="link.url" target="_blank">
+                {{ link.url }}
+              </a>
+            </td>
+            <td>
+              <i [class]="'fa fa-2x fa-' + link.icon"></i>
+            </td>
+            <td>
+              <div class="btn-group-vertical">
+                <button class="btn btn-warning btn-sm" (click)="onEdit(link)">
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="onDelete(link)">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</app-wrapper>

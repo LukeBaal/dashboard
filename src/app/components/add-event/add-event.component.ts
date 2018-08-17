@@ -13,10 +13,9 @@ export class AddEventComponent implements OnInit {
   event: Event = {
     name: '',
     location: '',
+    day: 0,
     time: ''
   };
-
-  day: number;
 
   constructor(
     private scheduleService: ScheduleService,
@@ -25,12 +24,9 @@ export class AddEventComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    this.day = this.route.snapshot.params['day'];
-  }
+  ngOnInit() {}
 
   onSubmit({ value, valid }: { value: Event; valid: boolean }) {
-    console.log('submitting...');
     if (!valid) {
       // Show error
       this.flashMessage.show('Please fill out the form correctly', {
@@ -38,7 +34,7 @@ export class AddEventComponent implements OnInit {
         timeout: 4000
       });
     } else {
-      this.scheduleService.newSchedule(this.day, value);
+      this.scheduleService.newSchedule(value.day, value);
       // Show message
       this.flashMessage.show('New event added', {
         cssClass: 'alert-success',

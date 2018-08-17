@@ -21,9 +21,10 @@ import { AuthService } from './services/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddTodoComponent } from './components/add-todo/add-todo.component';
 import { EditScheduleComponent } from './components/edit-schedule/edit-schedule.component';
-import { WeekScheduleComponent } from './components/week-schedule/week-schedule.component';
 import { AddEventComponent } from './components/add-event/add-event.component';
-import { ViewScheduleComponent } from './components/view-schedule/view-schedule.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { WrapperComponent } from './components/wrapper/wrapper.component';
 
 @NgModule({
   declarations: [
@@ -36,9 +37,10 @@ import { ViewScheduleComponent } from './components/view-schedule/view-schedule.
     LoginComponent,
     AddTodoComponent,
     EditScheduleComponent,
-    WeekScheduleComponent,
     AddEventComponent,
-    ViewScheduleComponent
+    SettingsComponent,
+    FooterComponent,
+    WrapperComponent
   ],
   imports: [
     BrowserModule,

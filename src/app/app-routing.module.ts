@@ -9,7 +9,7 @@ import { AddTodoComponent } from './components/add-todo/add-todo.component';
 import { EditScheduleComponent } from './components/edit-schedule/edit-schedule.component';
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
-import { ViewScheduleComponent } from './components/view-schedule/view-schedule.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'todo/add', component: AddTodoComponent, canActivate: [AuthGuard] },
   {
     path: 'schedule',
-    component: ViewScheduleComponent,
+    component: ScheduleComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -28,10 +28,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'schedule/add/:day',
+    path: 'schedule/add',
     component: AddEventComponent,
     canActivate: [AuthGuard]
-  }
+  },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

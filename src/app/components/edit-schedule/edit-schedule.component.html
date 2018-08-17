@@ -1,1 +1,45 @@
-<app-schedule canEdit="true"></app-schedule>
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="card-title">
+      <h3>Add Event</h3>
+    </div>
+    <form #eventForm="ngForm" (ngSubmit)="onSubmit(eventForm)">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" #eventName="ngModel" [(ngModel)]="event.name" [ngClass]="{'is-invalid': eventName.errors && eventName.touched}"
+              required>
+            <div class="invalid-feedback" [hidden]="!eventName.errors?.required">Name is required</div>
+          </div>
+          <div class="form-group">
+            <label for="name">Location</label>
+            <input type="text" class="form-control" name="location" #eventLocation="ngModel" [(ngModel)]="event.location">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">Day</label>
+            <select class="form-control" name="day" #eventDay="ngModel" [(ngModel)]="event.day">
+              <option value="0">Sunday</option>
+              <option value="1">Monday</option>
+              <option value="2">Tuesday</option>
+              <option value="3">Wednesday</option>
+              <option value="4">Thursday</option>
+              <option value="5">Friday</option>
+              <option value="6">Saturday</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="name">Time</label>
+            <input type="time" class="form-control" name="time" #eventTime="ngModel" [(ngModel)]="event.time">
+          </div>
+        </div>
+      </div>
+
+
+      <input type="submit" [value]="update ? 'Edit Event' : 'Add Event'" class="btn btn-block" [ngClass]="{ 'btn-warning': update, 'btn-success': !update }">
+    </form>
+  </div>
+</div>
+<app-schedule canEdit="true" (editEvent)="onEditEvent($event)"></app-schedule>

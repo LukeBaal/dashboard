@@ -17,6 +17,12 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/schedule">Schedule</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/settings">
+          <i class="fa fa-cog"></i>
+          Settings
+        </a>
+      </li>
     </ul>
 
     <ul class="navbar-nav ml-auto">
@@ -27,7 +33,11 @@
         <a routerLink="/login" class="nav-link">Login</a>
       </li>
       <li *ngIf="isLoggedIn" class="nav-item">
-        <a href="#" class="nav-link">{{ loggedInUser }}</a>
+        <a href="#" class="nav-link">
+          <i class="fa fa-user mr-1 bg-secondary user-circle">
+          </i>
+          {{ loggedInUser }}
+        </a>
       </li>
       <li *ngIf="isLoggedIn" class="nav-item">
         <a (click)="onLogoutClick()" href="#" class="nav-link">Logout</a>
