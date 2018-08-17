@@ -13,14 +13,12 @@
             <div class="invalid-feedback" [hidden]="!eventName.errors?.required">Name is required</div>
           </div>
           <div class="form-group">
-            <label for="name">Location</label>
-            <input type="text" class="form-control" name="location" #eventLocation="ngModel" [(ngModel)]="event.location">
+            <label for="location">Location</label>
+            <input type="text" class="form-control" name="location" [(ngModel)]="event.location">
           </div>
-        </div>
-        <div class="col-md-6">
           <div class="form-group">
-            <label for="name">Day</label>
-            <select class="form-control" name="day" #eventDay="ngModel" [(ngModel)]="event.day">
+            <label for="day">Day</label>
+            <select class="form-control" name="day" [(ngModel)]="event.day">
               <option value="0">Sunday</option>
               <option value="1">Monday</option>
               <option value="2">Tuesday</option>
@@ -30,13 +28,31 @@
               <option value="6">Saturday</option>
             </select>
           </div>
+        </div>
+        <div class="col-md-6">
           <div class="form-group">
-            <label for="name">Time</label>
-            <input type="time" class="form-control" name="time" #eventTime="ngModel" [(ngModel)]="event.time">
+            <label for="start">Start</label>
+            <input type="text" class="form-control" name="start" [(ngModel)]="event.start">
+          </div>
+          <div class="form-group">
+            <label for="end">End</label>
+            <input type="text" class="form-control" name="end" [(ngModel)]="event.end">
+          </div>
+          <div class="row">
+            <div class="pl-2 form-check col-md-4 text-center">
+              <input type="checkbox" class="form-check-input" name="biweekly" [(ngModel)]="biweekly">
+              <label for="biweekly" class="form-check-label">Biweekly ?</label>
+            </div>
+            <div class="form-group col-md-8" [hidden]="!biweekly">
+              <label for="week">Week</label>
+              <select class="form-control" name="week" [(ngModel)]="week">
+                <option value="1">Week 1</option>
+                <option value="2">Week 2</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
-
 
       <input type="submit" [value]="update ? 'Edit Event' : 'Add Event'" class="btn btn-block" [ngClass]="{ 'btn-warning': update, 'btn-success': !update }">
     </form>

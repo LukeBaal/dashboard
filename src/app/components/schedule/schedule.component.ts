@@ -13,8 +13,9 @@ export class ScheduleComponent implements OnInit {
   labels: string[] = new Array(7);
 
   days = new Array(7);
-  dayLabels: string[] = new Array(7);
   range = 7;
+
+  showBiweekly = true;
 
   @Input()
   canEdit = false;
@@ -29,20 +30,24 @@ export class ScheduleComponent implements OnInit {
 
   ngOnInit() {
     const labels = [];
-    const dayLabels = [];
     for (let i = 0; i < 7; i++) {
       this.scheduleService.getSchedule(i).subscribe(schedule => {
         labels[i] = WeekDay[i];
 
-        dayLabels[i] = WeekDay[i];
+        this.schedule[i] = {
+          weekday: i,
+          events: schedule.sort(
+            (a, b) =>
+              parseInt(a.start.slice(0, 2)) - parseInt(b.start.slice(0, 2))
+          )
+        };
+
         this.days[i] = this.schedule[i];
-        this.schedule[i] = schedule;
       });
     }
     this.schedule.sort((a, b) => b.day - a.day);
 
     this.labels = labels;
-    this.dayLabels = dayLabels;
     this.changeRange(this.range);
   }
 
@@ -50,17 +55,11 @@ export class ScheduleComponent implements OnInit {
     this.range = range;
     if (this.range === 1) {
       const today = new Date();
-      this.days = this.schedule.slice(today.getDay(), (today.getDay() + 1) % 7);
-      this.dayLabels = this.labels.slice(
-        today.getDay(),
-        (today.getDay() + 1) % 7
-      );
+      this.days = [this.schedule[today.getDay()]];
     } else if (this.range === 5) {
       this.days = this.schedule.slice(1, 6);
-      this.dayLabels = this.labels.slice(1, 6);
     } else if (this.range === 7) {
       this.days = this.schedule;
-      this.dayLabels = this.labels;
     }
   }
 
@@ -76,5 +75,19 @@ export class ScheduleComponent implements OnInit {
 
   onEdit(event: Event) {
     this.editEvent.emit(event);
+  }
+
+  timestringToDate(timestring: string): Date {
+    const date = new Date();
+    date.setHours(
+      parseInt(timestring.slice(0, 2)),
+      parseInt(timestring.slice(3))
+    );
+    return date;
+  }
+
+  getWeekDay(): string {
+    const today = new Date();
+    return WeekDay[today.getDay()];
   }
 }

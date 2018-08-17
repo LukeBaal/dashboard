@@ -7,7 +7,6 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AddTodoComponent } from './components/add-todo/add-todo.component';
 import { EditScheduleComponent } from './components/edit-schedule/edit-schedule.component';
-import { AddEventComponent } from './components/add-event/add-event.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
 
@@ -25,11 +24,6 @@ const routes: Routes = [
   {
     path: 'schedule/edit',
     component: EditScheduleComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'schedule/add',
-    component: AddEventComponent,
     canActivate: [AuthGuard]
   },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] }

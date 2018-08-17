@@ -3,5 +3,6 @@ export interface Event {
   name: string;
   location?: string;
   day: number;
-  time: string;
+  start: string;
+  end: string;
 }

@@ -4,11 +4,11 @@ import { LinkService } from '../../services/link.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.css']
+  selector: 'app-links',
+  templateUrl: './links.component.html',
+  styleUrls: ['./links.component.css']
 })
-export class FooterComponent implements OnInit {
+export class LinksComponent implements OnInit {
   links: Link[];
   loggedIn = false;
 
@@ -18,8 +18,8 @@ export class FooterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.getAuth().subscribe(auth => {
-      if (auth) {
+    this.authService.getAuth().subscribe(user => {
+      if (user) {
         this.loggedIn = true;
       } else {
         this.loggedIn = false;
@@ -28,6 +28,5 @@ export class FooterComponent implements OnInit {
     this.linkService.getLinks().subscribe(links => {
       this.links = links;
     });
-    console.log(this.loggedIn);
   }
 }

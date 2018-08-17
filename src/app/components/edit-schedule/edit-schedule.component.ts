@@ -12,12 +12,15 @@ export class EditScheduleComponent implements OnInit {
   week = [0, 1, 2, 3, 4, 5, 6];
   range = 7;
   event: Event = {
+    id: '',
     name: '',
     location: '',
     day: 0,
-    time: ''
+    start: '',
+    end: ''
   };
 
+  biweekly = false;
   update = false;
 
   constructor(
@@ -37,6 +40,7 @@ export class EditScheduleComponent implements OnInit {
     } else {
       // Check if updating existing event, or new event being added
       if (this.update) {
+        value.id = this.event.id;
         this.scheduleService.updateEvent(value.day, value);
         // Show message
         this.flashMessage.show('New event updated', {

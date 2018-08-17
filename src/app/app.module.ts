@@ -21,10 +21,8 @@ import { AuthService } from './services/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddTodoComponent } from './components/add-todo/add-todo.component';
 import { EditScheduleComponent } from './components/edit-schedule/edit-schedule.component';
-import { AddEventComponent } from './components/add-event/add-event.component';
 import { SettingsComponent } from './components/settings/settings.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { WrapperComponent } from './components/wrapper/wrapper.component';
+import { LinksComponent } from './components/links/links.component';
 
 @NgModule({
   declarations: [
@@ -37,10 +35,8 @@ import { WrapperComponent } from './components/wrapper/wrapper.component';
     LoginComponent,
     AddTodoComponent,
     EditScheduleComponent,
-    AddEventComponent,
     SettingsComponent,
-    FooterComponent,
-    WrapperComponent
+    LinksComponent
   ],
   imports: [
     BrowserModule,
