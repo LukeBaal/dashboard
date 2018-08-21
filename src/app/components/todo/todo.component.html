@@ -1,37 +1,17 @@
 <div class="card">
   <div class="card-body">
-    <table *ngIf="todos?.length > 0;else noTodos" class="table table-striped">
-      <thead class="thead-inverse">
-        <tr>
-          <th>Course</th>
-          <th>Name</th>
-          <th>Due Date</th>
-          <th>Due Time</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let todo of todos">
-          <td>{{ todo.course }}</td>
-          <td>{{ todo.name }}</td>
-          <td>{{ todo.duedate | date }}</td>
-          <td>{{ todo.duedate | date:'shortTime' }}</td>
-          <td>
-            <button class="btn btn-danger btn-sm" (click)="onDelete(todo)">
-              <i class="fa fa-times"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <button class="btn btn-success btn-block" routerLink="/todo/add">
+    <div class="card-title">
+      <h4>ToDo</h4>
+    </div>
+    <app-todo-table title="Overdue" [todos]="todos?.overdue" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.overdue.length > 0"></app-todo-table>
+    <app-todo-table title="Today" [todos]="todos?.today" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.today.length > 0"></app-todo-table>
+    <app-todo-table title="Tomorrow" [todos]="todos?.tomorrow" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.tomorrow.length > 0"></app-todo-table>
+    <app-todo-table title="This Week" [todos]="todos?.thisWeek" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.thisWeek.length > 0"></app-todo-table>
+    <app-todo-table title="Future" [todos]="todos?.future" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.future.length > 0"></app-todo-table>
+
+    <button class="btn btn-success btn-block" routerLink="/todo/add" *ngIf="canEdit === true">
       Add Todo
-      <i class=" fa fa-plus "></i>
+      <i class="fa fa-plus"></i>
     </button>
   </div>
 </div>
-
-<ng-template #noTodos>
-  <hr>
-  <h5>No ToDos</h5>
-</ng-template>

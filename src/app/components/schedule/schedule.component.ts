@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ScheduleService } from '../../services/schedule.service';
 import { WeekDay } from '@angular/common';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { DateService } from '../../services/date.service';
 
 @Component({
   selector: 'app-schedule',
@@ -14,22 +15,34 @@ export class ScheduleComponent implements OnInit {
 
   days = new Array(7);
   range = 7;
+  today: Event[];
 
   showBiweekly = true;
+  semesterStart: Date;
 
   @Input()
   canEdit = false;
+
+  @Input()
+  todayOnly = false;
 
   @Output()
   editEvent: EventEmitter<Event> = new EventEmitter();
 
   constructor(
     private flashMessage: FlashMessagesService,
-    private scheduleService: ScheduleService
+    private scheduleService: ScheduleService,
+    private dateService: DateService
   ) {}
 
   ngOnInit() {
     const labels = [];
+
+    this.dateService.getSemester().subscribe(data => {
+      const startDate = new Date(data.start);
+      this.semesterStart = startDate;
+    });
+
     for (let i = 0; i < 7; i++) {
       this.scheduleService.getSchedule(i).subscribe(schedule => {
         labels[i] = WeekDay[i];
@@ -42,12 +55,29 @@ export class ScheduleComponent implements OnInit {
           )
         };
 
+        this.schedule[i].events.filter(event => {
+          if (event.biweekly) {
+            if (parseInt(event.week) === this.getWeek() + 1) {
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return true;
+          }
+        });
         this.days[i] = this.schedule[i];
+
+        const today = new Date().getDay();
+        if (today === this.schedule[i].weekday) {
+          this.today = this.schedule[i];
+        }
       });
     }
     this.schedule.sort((a, b) => b.day - a.day);
 
     this.labels = labels;
+
     this.changeRange(this.range);
   }
 
@@ -89,5 +119,16 @@ export class ScheduleComponent implements OnInit {
   getWeekDay(): string {
     const today = new Date();
     return WeekDay[today.getDay()];
+  }
+
+  getWeek(): number {
+    const week = 1000 * 60 * 60 * 24 * 7;
+    const today = new Date();
+
+    const diff = Math.abs(today.valueOf() - this.semesterStart.valueOf());
+
+    const weekCount = Math.floor(diff / week);
+
+    return weekCount % 2;
   }
 }

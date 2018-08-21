@@ -75,3 +75,21 @@
     </table>
   </div>
 </div>
+
+<!-- <div class="card mt-2">
+  <div class="card-body">
+    <div class="card-title">
+      <h4>Semester Start Date</h4>
+    </div>
+    <form #semesterStartForm="ngForm" (ngSubmit)="onStartSubmit(semesterStartForm)">
+      <div class="form-group">
+        <label for="startdate">Start Date</label>
+        <input type="date" class="form-control" name="startdate" #startDate="ngModel" [(ngModel)]="semester.start" [ngClass]="{'is-invalid': startDate.errors && startDate.touched}"
+          required>
+        <div class="invalid-feedback" [hidden]="!startDate.errors?.required">Start date is required</div>
+      </div>
+
+      <input type="submit" class="btn btn-block btn-primary" value="Submit">
+    </form>
+  </div>
+</div> -->

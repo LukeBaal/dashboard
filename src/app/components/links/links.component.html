@@ -1,8 +1,8 @@
-<div class="bg-primary mt-3">
-  <div class="row justify-content-md-center">
-    <div class="card bg-primary border-primary col-md-auto" *ngFor="let link of links">
-      <div class="card-body">
-        <a [href]="link.url" class="btn btn-light" target="_blank">
+<div class="card bg-primary mt-3">
+  <div class="card-body">
+    <div class="row justify-content-center">
+      <div class="bg-primary border-primary col mb-1" *ngFor="let link of links">
+        <a [href]="link.url" class="btn btn-light btn-block" target="_blank">
           <span class="mr-1">
             <i [class]="'fa fa-' + link.icon"></i>
           </span>

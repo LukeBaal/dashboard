@@ -1,16 +1,8 @@
-<div class="text-right btn-toolbar justify-content-between mb-3" role="toolbar">
-  <div class="btn-group mb-2 col-md-6" role="group" aria-label="Day Range">
+<div class="text-right btn-toolbar justify-content-between mb-3" role="toolbar" *ngIf="!todayOnly">
+  <div class="btn-group mb-2" role="group" aria-label="Day Range">
     <button class="btn" [ngClass]="{ 'btn-primary': range === 1, 'btn-secondary': range !== 1 }" (click)="changeRange(1)">1</button>
     <button class="btn" [ngClass]="{ 'btn-primary': range === 5, 'btn-secondary': range !== 5 }" (click)="changeRange(5)">5</button>
     <button class="btn" [ngClass]="{ 'btn-primary': range === 7, 'btn-secondary': range !== 7 }" (click)="changeRange(7)">7</button>
-  </div>
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <div class="input-group-text">
-        Show Week #
-        <input type="checkbox" class=" ml-2 form-check" name="showBiweek" [(value)]="showBiweekly">
-      </div>
-    </div>
   </div>
   <a class="btn btn-warning" routerLink="/schedule/edit" *ngIf="!canEdit">
     <i class="fa fa-pencil"></i>
@@ -20,42 +12,27 @@
 
 <div *ngFor="let day of days; index as i" class="col-sm-12">
   <div *ngIf="day && day.events.length > 0">
-    <div class="card mb-4">
-      <div class="card-body">
-        <div class="card-title">
-          <h4>{{ labels[day.weekday] }}</h4>
-        </div>
-        <table *ngIf="day.events.length > 0" class="table table-striped">
-          <thead class="thead-inverse">
-            <tr>
-              <th *ngIf="showBiweekly">Week</th>
-              <th>Start</th>
-              <th>End</th>
-              <th>Name</th>
-              <th>Location</th>
-              <th *ngIf="canEdit"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let event of day.events">
-              <td *ngIf="showBiweekly">{{ event.week ? 'W'+event.week : '' }}</td>
-              <td>{{ timestringToDate(event.start) | date:'shortTime' }}</td>
-              <td>{{ timestringToDate(event.end) | date:'shortTime' }}</td>
-              <td>{{ event.name }}</td>
-              <td>{{ event.location }}</td>
-              <td *ngIf="canEdit">
-                <div class="btn-group-vertical">
-                  <button class="btn btn-warning btn-sm" (click)="onEdit(event)">
-                    <i class="fa fa-pencil"></i>
-                  </button>
-                  <button class="btn btn-danger btn-sm" (click)="onDelete(i, event)">
-                    <i class="fa fa-times"></i>
-                  </button>
+    <div *ngIf="!todayOnly || (todayOnly && getWeekDay() === labels[day.weekday])">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="card-title">
+            <h4>{{ labels[day.weekday] }}</h4>
+          </div>
+          <div *ngIf="day.events.length > 0">
+            <div class="card bg-primary mb-2" *ngFor="let event of day.events">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    {{ timestringToDate(event.start) | date:'shortTime' }} - {{ timestringToDate(event.end) | date:'shortTime' }}
+                  </div>
+                  <div class="col text-right">
+                    {{ event.name }} @{{ event.location }}
+                  </div>
                 </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -35,9 +35,7 @@ export class AddTodoComponent implements OnInit {
       });
     } else {
       // Add new todo
-      value.duedate = new Date(
-        `${this.duedate} ${this.duetime}`
-      ).toLocaleString();
+      value.duedate = new Date(`${this.duedate} ${this.duetime}`).toString();
       this.todoService.newTodo(value);
       // Show message
       this.flashMessage.show('New todo added', {

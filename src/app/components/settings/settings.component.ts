@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Link } from '../../model/Link';
 import { LinkService } from '../../services/link.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { Semester } from '../../model/Semester';
+import { DateService } from '../../services/date.service';
 
 @Component({
   selector: 'app-settings',
@@ -17,6 +19,10 @@ export class SettingsComponent implements OnInit {
     icon: ''
   };
 
+  semester: Semester = {
+    start: ''
+  };
+
   update = false;
 
   constructor(
@@ -30,7 +36,7 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  onSubmit({ value, valid }: { value: Link; valid: boolean }) {
+  onLinkSubmit({ value, valid }: { value: Link; valid: boolean }) {
     if (!valid) {
       // Show error
       this.flashMessage.show('Please fill out the form correctly', {
@@ -43,7 +49,7 @@ export class SettingsComponent implements OnInit {
         value.id = this.link.id;
         this.linkService.updateLink(value);
         // Show message
-        this.flashMessage.show('New link updated', {
+        this.flashMessage.show('Link updated', {
           cssClass: 'alert-warning',
           timeout: 4000
         });
@@ -79,4 +85,21 @@ export class SettingsComponent implements OnInit {
       });
     }
   }
+
+  // onStartSubmit({ value, valid }: { value: Semester; valid: boolean }) {
+  //   if (!valid) {
+  //     // Show error
+  //     this.flashMessage.show('Please fill out the form correctly', {
+  //       cssClass: 'alert-danger',
+  //       timeout: 4000
+  //     });
+  //   } else {
+  //     this.dateService.newSemester(value);
+  //     // Show message
+  //     this.flashMessage.show('Semester start date set', {
+  //       cssClass: 'alert-success',
+  //       timeout: 4000
+  //     });
+  //   }
+  // }
 }

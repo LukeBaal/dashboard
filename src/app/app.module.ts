@@ -23,6 +23,8 @@ import { AddTodoComponent } from './components/add-todo/add-todo.component';
 import { EditScheduleComponent } from './components/edit-schedule/edit-schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { LinksComponent } from './components/links/links.component';
+import { TodoTableComponent } from './components/todo-table/todo-table.component';
+import { ScheduleTodayComponent } from './components/schedule-today/schedule-today.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { LinksComponent } from './components/links/links.component';
     AddTodoComponent,
     EditScheduleComponent,
     SettingsComponent,
-    LinksComponent
+    LinksComponent,
+    TodoTableComponent,
+    ScheduleTodayComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +51,7 @@ import { LinksComponent } from './components/links/links.component';
     FormsModule,
     FlashMessagesModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase, 'dashboard'),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     BrowserAnimationsModule
   ],

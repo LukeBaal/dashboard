@@ -1,0 +1,28 @@
+<hr>
+<h5>{{ title }}</h5>
+<div *ngIf="todos?.length > 0;else noTodos">
+  <div class="card bg-primary mb-1" *ngFor="let todo of todos">
+    <div class="card-body">
+      <div class="card-title">
+        <div class="row">
+          <div class="col">
+            <h5>
+              <span class="font-weight-bold">{{ todo.course }}</span> {{ todo.name }}
+            </h5>
+          </div>
+          <div class="col text-right">
+            <button class="btn btn-danger btn-sm" (click)="onDelete(todo)" *ngIf="canEdit === true">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      @{{ todo.duedate | date:'MMM d, h:mm a' }}
+    </div>
+  </div>
+</div>
+
+<ng-template #noTodos>
+  <hr>
+  <h5>No ToDos</h5>
+</ng-template>
