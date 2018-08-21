@@ -36,7 +36,7 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  onLinkSubmit({ value, valid }: { value: Link; valid: boolean }) {
+  onSubmit({ value, valid }: { value: Link; valid: boolean }) {
     if (!valid) {
       // Show error
       this.flashMessage.show('Please fill out the form correctly', {
