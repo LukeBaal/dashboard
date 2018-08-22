@@ -1,10 +1,11 @@
-<div class="card bg-primary mt-3">
+<div class="card bg-primary mt-3" *ngIf="links?.length > 0">
   <div class="card-body">
     <div class="row justify-content-center">
       <div class="bg-primary border-primary col mb-1" *ngFor="let link of links">
         <a [href]="link.url" class="btn btn-light btn-block" target="_blank">
           <span class="mr-1">
-            <i [class]="'fa fa-' + link.icon"></i>
+            <!-- <i [class]="'fab fa-' + link.icon"></i> -->
+            <i [class]="link.icon"></i>
           </span>
           {{ link.label }}
         </a>

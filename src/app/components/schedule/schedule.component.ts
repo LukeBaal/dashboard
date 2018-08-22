@@ -93,9 +93,9 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
-  onDelete(day: number, event) {
+  onDelete(event) {
     if (confirm('Are you sure?')) {
-      this.scheduleService.deleteEvent(day, event);
+      this.scheduleService.deleteEvent(parseInt(event.day), event);
       this.flashMessage.show('Event deleted', {
         cssClass: 'alert-success',
         timeout: 4000

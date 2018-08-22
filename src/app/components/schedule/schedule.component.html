@@ -5,17 +5,20 @@
     <button class="btn" [ngClass]="{ 'btn-primary': range === 7, 'btn-secondary': range !== 7 }" (click)="changeRange(7)">7</button>
   </div>
   <a class="btn btn-warning" routerLink="/schedule/edit" *ngIf="!canEdit">
-    <i class="fa fa-pencil"></i>
+    <i class="fas fa-pencil-alt"></i>
   </a>
   <a class="btn btn-primary" routerLink="/schedule" *ngIf="canEdit">Back</a>
 </div>
 
-<div *ngFor="let day of days; index as i" class="col-sm-12">
+<div *ngFor="let day of days; index as i">
   <div *ngIf="day && day.events.length > 0">
     <div *ngIf="!todayOnly || (todayOnly && getWeekDay() === labels[day.weekday])">
       <div class="card mb-4">
+        <div class="card-header" *ngIf="todayOnly">
+          <i class="fas fa-calendar-alt mr-1"></i> {{ labels[day.weekday] }} - W{{ getWeek() + 1}}
+        </div>
         <div class="card-body">
-          <div class="card-title">
+          <div class="card-title" *ngIf="!todayOnly">
             <h4>{{ labels[day.weekday] }}</h4>
           </div>
           <div *ngIf="day.events.length > 0">
@@ -23,10 +26,26 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col">
+                    <i class="fas fa-clock"></i>
                     {{ timestringToDate(event.start) | date:'shortTime' }} - {{ timestringToDate(event.end) | date:'shortTime' }}
                   </div>
                   <div class="col text-right">
-                    {{ event.name }} @{{ event.location }}
+                    <div [ngClass]="{ 'row': canEdit }">
+                      <div [ngClass]="{ 'col': canEdit }">
+                        <span class="font-weight-bold">{{ event.name }}</span>
+                        <br>
+                        <i class="fas fa-map-marker-alt"></i>
+                        {{ event.location }}
+                      </div>
+                      <div class="col" *ngIf="canEdit">
+                        <button class="btn btn-block btn-warning" (click)="onEdit(event)">
+                          <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <button class="btn btn-block btn-danger" (click)="onDelete(event)">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -4,7 +4,7 @@
       <div class="card-body">
         <h1 class="text-center pb-4 pt-3">
           <span class="text-primary">
-            <i class="fa fa-user"></i> Dashboard</span> Login
+            <i class="fas fa-user"></i> Dashboard</span> Login
         </h1>
         <form (submit)="onSubmit()">
           <div class="form-group">
@@ -17,6 +17,11 @@
           </div>
           <input type="submit" value="Login" class="btn btn-primary btn-block">
         </form>
+        <hr>
+        <button class="mt-2 btn btn-block btn-danger" (click)="onGoogleClick()">
+          <i class="fab fa-google"></i>
+          Sign in with Google
+        </button>
       </div>
     </div>
   </div>

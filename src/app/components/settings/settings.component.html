@@ -58,15 +58,16 @@
             </a>
           </td>
           <td>
-            <i [class]="'fa fa-2x fa-' + link.icon"></i>
+            <!-- <i [class]="'fas fa-2x fa-' + link.icon"></i> -->
+            <i [class]="'fa-2x ' + link.icon"></i>
           </td>
           <td>
             <div class="btn-group-vertical">
               <button class="btn btn-warning btn-sm" (click)="onEdit(link)">
-                <i class="fa fa-pencil"></i>
+                <i class="fas fa-pencil-alt"></i>
               </button>
               <button class="btn btn-danger btn-sm" (click)="onDelete(link)">
-                <i class="fa fa-times"></i>
+                <i class="fas fa-times"></i>
               </button>
             </div>
           </td>

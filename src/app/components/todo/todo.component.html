@@ -1,17 +1,17 @@
 <div class="card">
+  <div class="card-header">
+    ToDo
+  </div>
   <div class="card-body">
-    <div class="card-title">
-      <h4>ToDo</h4>
-    </div>
     <app-todo-table title="Overdue" [todos]="todos?.overdue" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.overdue.length > 0"></app-todo-table>
     <app-todo-table title="Today" [todos]="todos?.today" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.today.length > 0"></app-todo-table>
     <app-todo-table title="Tomorrow" [todos]="todos?.tomorrow" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.tomorrow.length > 0"></app-todo-table>
     <app-todo-table title="This Week" [todos]="todos?.thisWeek" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.thisWeek.length > 0"></app-todo-table>
     <app-todo-table title="Future" [todos]="todos?.future" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.future.length > 0"></app-todo-table>
 
-    <button class="btn btn-success btn-block" routerLink="/todo/add" *ngIf="canEdit === true">
+    <button class="mt-2 btn btn-success btn-block" routerLink="/todo/add" *ngIf="canEdit === true">
       Add Todo
-      <i class="fa fa-plus"></i>
+      <i class="fas fa-plus"></i>
     </button>
   </div>
 </div>
