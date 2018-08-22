@@ -43,7 +43,7 @@ export class EditScheduleComponent implements OnInit {
         value.id = this.event.id;
         this.scheduleService.updateEvent(value.day, value);
         // Show message
-        this.flashMessage.show('New event updated', {
+        this.flashMessage.show('Event updated', {
           cssClass: 'alert-warning',
           timeout: 4000
         });
