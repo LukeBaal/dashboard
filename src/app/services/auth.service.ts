@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User } from '@firebase/auth-types';
+import { User, AuthProvider } from '@firebase/auth-types';
 import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
 
@@ -11,13 +11,12 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   constructor(private afAuth: AngularFireAuth, private router: Router) {}
-
   googleLogin() {
     const provider = new auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
   }
 
-  private oAuthLogin(provider) {
+  private oAuthLogin(provider: AuthProvider) {
     return this.afAuth.auth.signInWithPopup(provider);
   }
 

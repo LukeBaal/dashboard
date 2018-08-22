@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit {
   }
 
   onGoogleClick() {
-    console.log('CLICK');
     this.authService
       .googleLogin()
       .then(res => {
