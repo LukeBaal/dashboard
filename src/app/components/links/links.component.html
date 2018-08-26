@@ -4,7 +4,6 @@
       <div class="bg-primary border-primary col mb-1" *ngFor="let link of links">
         <a [href]="link.url" class="btn btn-light btn-block" target="_blank">
           <span class="mr-1">
-            <!-- <i [class]="'fab fa-' + link.icon"></i> -->
             <i [class]="link.icon"></i>
           </span>
           {{ link.label }}

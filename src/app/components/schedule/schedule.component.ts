@@ -3,6 +3,9 @@ import { ScheduleService } from '../../services/schedule.service';
 import { WeekDay } from '@angular/common';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { DateService } from '../../services/date.service';
+import { CourseService } from '../../services/course.service';
+import { Course } from '../../model/Course';
+import { Event } from '../../model/Event';
 
 @Component({
   selector: 'app-schedule',
@@ -20,6 +23,8 @@ export class ScheduleComponent implements OnInit {
   showBiweekly = true;
   semesterStart: Date;
 
+  courses: Course[];
+
   @Input()
   canEdit = false;
 
@@ -32,11 +37,16 @@ export class ScheduleComponent implements OnInit {
   constructor(
     private flashMessage: FlashMessagesService,
     private scheduleService: ScheduleService,
-    private dateService: DateService
+    private dateService: DateService,
+    private courseService: CourseService
   ) {}
 
   ngOnInit() {
     const labels = [];
+
+    this.courseService.getCourses().subscribe(courses => {
+      this.courses = courses;
+    });
 
     this.dateService.getSemester().subscribe(data => {
       const startDate = new Date(data.start);
@@ -49,23 +59,24 @@ export class ScheduleComponent implements OnInit {
 
         this.schedule[i] = {
           weekday: i,
-          events: schedule.sort(
-            (a, b) =>
-              parseInt(a.start.slice(0, 2)) - parseInt(b.start.slice(0, 2))
-          )
+          events: schedule.sort((a, b) => {
+            const timeA = parseInt(a.start.replace(':', ''));
+            const timeB = parseInt(b.start.replace(':', ''));
+            return timeA - timeB;
+          })
         };
 
-        this.schedule[i].events.filter(event => {
-          if (event.biweekly) {
-            if (parseInt(event.week) === this.getWeek() + 1) {
-              return true;
-            } else {
-              return false;
-            }
-          } else {
-            return true;
-          }
-        });
+        // this.schedule[i].events.filter(event => {
+        //   if (event.biweekly) {
+        //     if (parseInt(event.week) === this.getWeek() + 1) {
+        //       return true;
+        //     } else {
+        //       return false;
+        //     }
+        //   } else {
+        //     return true;
+        //   }
+        // });
         this.days[i] = this.schedule[i];
 
         const today = new Date().getDay();
@@ -130,5 +141,21 @@ export class ScheduleComponent implements OnInit {
     const weekCount = Math.floor(diff / week);
 
     return weekCount % 2;
+  }
+
+  getCourseCode(event): string {
+    const courses = this.courses.filter(course =>
+      event.name.includes(course.name)
+    );
+
+    return courses.length > 0 ? courses[0].code : '';
+  }
+
+  getCourseColor(event): string {
+    const courses = this.courses.filter(course =>
+      event.name.includes(course.name)
+    );
+
+    return courses.length > 0 ? courses[0].color : '';
   }
 }

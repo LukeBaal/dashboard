@@ -14,7 +14,7 @@
   <div *ngIf="day && day.events.length > 0">
     <div *ngIf="!todayOnly || (todayOnly && getWeekDay() === labels[day.weekday])">
       <div class="card mb-4">
-        <div class="card-header" *ngIf="todayOnly">
+        <div class="card-header" *ngIf="todayOnly && semesterStart">
           <i class="fas fa-calendar-alt mr-1"></i> {{ labels[day.weekday] }} - W{{ getWeek() + 1}}
         </div>
         <div class="card-body">
@@ -22,11 +22,14 @@
             <h4>{{ labels[day.weekday] }}</h4>
           </div>
           <div *ngIf="day.events.length > 0">
-            <div class="card bg-primary mb-2" *ngFor="let event of day.events">
+            <div class="card mb-2" *ngFor="let event of day.events" [ngStyle]="{ 'background-color': getCourseColor(event) }">
               <div class="card-body">
                 <div class="row">
                   <div class="col">
                     <span class="font-weight-bold">{{ event.name }}</span>
+                    <br> {{ getCourseCode(event) }} <span *ngIf="event.crn">- CRN: {{ event.crn }}</span>
+                    <br>
+                    <span *ngIf="event.biweekly">Week {{ event.week }}</span>
                   </div>
                   <div class="col text-right">
                     <div [ngClass]="{ 'row': canEdit }">

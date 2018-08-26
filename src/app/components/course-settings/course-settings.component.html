@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="card mt-3">
+      <div class="card-header">
+        Add Course
+      </div>
+      <div class="card-body">
+        <form #courseForm="ngForm" (ngSubmit)="onSubmit(courseForm)">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" #courseName="ngModel" [(ngModel)]="course.name" [ngClass]="{'is-invalid': courseName.errors && courseName.touched}"
+              required>
+            <div class="invalid-feedback" [hidden]="!courseName.errors?.required">Name is required</div>
+          </div>
+          <div class="form-group">
+            <label for="code">Code</label>
+            <input type="text" class="form-control" name="code" #courseCode="ngModel" [(ngModel)]="course.code" [ngClass]="{'is-invalid': courseCode.errors && courseCode.touched}"
+              required pattern="[a-zA-Z]{4}[0-9]{4}">
+            <div class="invalid-feedback" [hidden]="!courseCode.errors?.required">Code is required</div>
+            <div class="invalid-feedback" [hidden]="!courseCode.errors?.pattern">Code is invalid (ex SOFE4200)</div>
+          </div>
+          <div class="form-group">
+            <label for="color" class="p-1 rounded" [ngStyle]="{ 'background-color': course.color }">Colour</label>
+            <input type="text" class="form-control" name="color" #courseColor="ngModel" [(ngModel)]="course.color" [ngClass]="{'is-invalid': courseColor.errors && courseColor.touched}"
+              pattern="#[0-9a-fA-F]{6}|#">
+            <div class="invalid-feedback" [hidden]="!courseColor.errors?.pattern">Invalid Colour (ex #3ef1aa OR #3EF1AA)</div>
+          </div>
+
+          <input type="submit" [value]="update ? 'Edit Course' : 'Add Course'" class="btn btn-block" [ngClass]="{ 'btn-warning': update, 'btn-success': !update }">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="card mt-3">
+      <div class="card-header">
+        Courses
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead class="thead-inverse">
+            <tr>
+              <td>Name</td>
+              <td>Code</td>
+              <td>Colour</td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let course of courses">
+              <td>{{ course.name }}</td>
+              <td>{{ course.code }}</td>
+              <td>
+                <span class="p-1 rounded" [ngStyle]="{ 'background-color': course.color }">
+                  {{ course.color }}
+                </span>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-warning" (click)="onEdit(course)">
+                    <i class="fas fa-pencil-alt"></i>
+                  </button>
+                  <button class="btn btn-danger" (click)="onDelete(course)">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

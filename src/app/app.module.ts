@@ -24,6 +24,8 @@ import { EditScheduleComponent } from './components/edit-schedule/edit-schedule.
 import { SettingsComponent } from './components/settings/settings.component';
 import { LinksComponent } from './components/links/links.component';
 import { TodoTableComponent } from './components/todo-table/todo-table.component';
+import { LinkSettingsComponent } from './components/link-settings/link-settings.component';
+import { CourseSettingsComponent } from './components/course-settings/course-settings.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { TodoTableComponent } from './components/todo-table/todo-table.component
     EditScheduleComponent,
     SettingsComponent,
     LinksComponent,
-    TodoTableComponent
+    TodoTableComponent,
+    LinkSettingsComponent,
+    CourseSettingsComponent
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,7 @@ export class EditScheduleComponent implements OnInit {
     id: '',
     name: '',
     location: '',
+    crn: null,
     day: 0,
     start: '',
     end: ''
