@@ -7,7 +7,7 @@ jobs:
   build-job:
     docker:
       - image: circleci/node:10.9
-    working_directory: /tmp/dashboard
+    working_directory: ~/dashboard
 
     steps:
       - checkout
@@ -27,6 +27,9 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run: npm run build-prod
+
+      - store-artifacts:
+          path: dist/dashboard
 
   deploy-job:
     docker:
