@@ -28,7 +28,7 @@ jobs:
 
   deploy-job:
     docker:
-      - image: my-image-version-tag
+      - image: circleci/node:10.9
     working_directory: /tmp/my-project
     steps:
       - run:
