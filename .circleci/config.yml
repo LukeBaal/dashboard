@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  build-job:
     docker:
       - image: circleci/node:10.9
     working_directory: ~/repo
