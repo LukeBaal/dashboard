@@ -26,16 +26,10 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: npm run build-prod
+      - run:
+          name: Build for production
+          command: npm run build-prod
 
-      - store-artifacts:
-          path: dist/dashboard
-
-  deploy-job:
-    docker:
-      - image: circleci/node:10.9
-    working_directory: /tmp/dashboard
-    steps:
       - run:
           name: Deploy Master to Firebase
           command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
@@ -45,10 +39,7 @@ workflows:
 
   -deploy:
     jobs:
-      - build-job
-      - deploy-job:
-          requires:
-            - build-job
+      - build-job:
           filters:
             branches:
               only: master
