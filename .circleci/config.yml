@@ -7,7 +7,7 @@ jobs:
   build-job:
     docker:
       - image: circleci/node:10.9
-    working_directory: ~/repo
+    working_directory: /tmp/dashboard
 
     steps:
       - checkout
@@ -31,7 +31,7 @@ jobs:
   deploy-job:
     docker:
       - image: circleci/node:10.9
-    working_directory: ~/repo
+    working_directory: /tmp/dashboard
     steps:
       - run:
           name: Deploy Master to Firebase
