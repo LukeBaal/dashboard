@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ScheduleService } from '../../services/schedule.service';
 import { WeekDay } from '@angular/common';
 import { FlashMessagesService } from 'angular2-flash-messages';
-import { DateService } from '../../services/date.service';
+import { UserService } from '../../services/user.service';
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../model/Course';
 import { Event } from '../../model/Event';
@@ -37,7 +37,7 @@ export class ScheduleComponent implements OnInit {
   constructor(
     private flashMessage: FlashMessagesService,
     private scheduleService: ScheduleService,
-    private dateService: DateService,
+    private userService: UserService,
     private courseService: CourseService
   ) {}
 
@@ -48,8 +48,8 @@ export class ScheduleComponent implements OnInit {
       this.courses = courses;
     });
 
-    this.dateService.getSemester().subscribe(data => {
-      const startDate = new Date(data.start);
+    this.userService.getUser().subscribe(user => {
+      const startDate = new Date(user.start);
       this.semesterStart = startDate;
     });
 
@@ -140,7 +140,17 @@ export class ScheduleComponent implements OnInit {
 
     const weekCount = Math.floor(diff / week);
 
-    return weekCount % 2;
+    return (weekCount % 2) + 1;
+  }
+
+  isSameWeek(event): boolean {
+    if (event.biweekly) {
+      const thisWeek = this.getWeek();
+      const week = parseInt(event.week);
+      return thisWeek === week;
+    } else {
+      return true;
+    }
   }
 
   getCourseCode(event): string {

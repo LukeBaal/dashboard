@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Semester } from '../model/Semester';
+import { User } from '../model/User';
 import { Observable } from 'rxjs';
 import {
   AngularFirestoreDocument,
@@ -12,9 +12,9 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class DateService {
-  semesterDoc: AngularFirestoreDocument<Semester>;
-  semester: Observable<Semester>;
+export class UserService {
+  userDoc: AngularFirestoreDocument<User>;
+  user: Observable<User>;
   uid: string;
 
   constructor(private afs: AngularFirestore, private auth: AuthService) {
@@ -25,16 +25,9 @@ export class DateService {
     });
   }
 
-  newSemester(semester: Semester) {
-    const semesterDoc = this.getSemester();
-    semesterDoc.subscribe(doc => {
-      console.log(doc);
-    });
-  }
-
-  getSemester(): Observable<any> {
-    this.semesterDoc = this.afs.doc<Semester>(`users/${this.uid}`);
-    this.semester = this.semesterDoc.snapshotChanges().pipe(
+  getUser(): Observable<any> {
+    this.userDoc = this.afs.doc<User>(`users/${this.uid}`);
+    this.user = this.userDoc.snapshotChanges().pipe(
       map(action => {
         if (action.payload.exists === false) {
           return null;
@@ -44,11 +37,11 @@ export class DateService {
       })
     );
 
-    return this.semester;
+    return this.user;
   }
 
-  updateSemester(semester: Semester) {
-    this.semesterDoc = this.afs.doc<Semester>(`users/${this.uid}`);
-    this.semesterDoc.update(semester);
+  updateUser(user: User) {
+    this.userDoc = this.afs.doc<User>(`users/${this.uid}`);
+    this.userDoc.update(user);
   }
 }

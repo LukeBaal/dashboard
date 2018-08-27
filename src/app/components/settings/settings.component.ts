@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Link } from '../../model/Link';
-import { LinkService } from '../../services/link.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
-import { Semester } from '../../model/Semester';
-import { DateService } from '../../services/date.service';
-import { Course } from '../../model/Course';
-import { CourseService } from '../../services/course.service';
+import { User } from '../../model/User';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-settings',
@@ -13,23 +9,33 @@ import { CourseService } from '../../services/course.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-  constructor() {}
+  start: string;
 
-  ngOnInit() {}
-  // onStartSubmit({ value, valid }: { value: Semester; valid: boolean }) {
-  //   if (!valid) {
-  //     // Show error
-  //     this.flashMessage.show('Please fill out the form correctly', {
-  //       cssClass: 'alert-danger',
-  //       timeout: 4000
-  //     });
-  //   } else {
-  //     this.dateService.newSemester(value);
-  //     // Show message
-  //     this.flashMessage.show('Semester start date set', {
-  //       cssClass: 'alert-success',
-  //       timeout: 4000
-  //     });
-  //   }
-  // }
+  constructor(
+    private userService: UserService,
+    private flashMessage: FlashMessagesService
+  ) {}
+
+  ngOnInit() {
+    this.userService.getUser().subscribe(user => {
+      this.start = user.start;
+    });
+  }
+
+  onSubmit({ value, valid }: { value: User; valid: boolean }) {
+    if (!valid) {
+      // Show error
+      this.flashMessage.show('Please fill out the form correctly', {
+        cssClass: 'alert-danger',
+        timeout: 4000
+      });
+    } else {
+      this.userService.updateUser(value);
+      // Show message
+      this.flashMessage.show('User start date set', {
+        cssClass: 'alert-success',
+        timeout: 4000
+      });
+    }
+  }
 }

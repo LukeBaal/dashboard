@@ -4,6 +4,7 @@
     <button class="btn" [ngClass]="{ 'btn-primary': range === 5, 'btn-secondary': range !== 5 }" (click)="changeRange(5)">5</button>
     <button class="btn" [ngClass]="{ 'btn-primary': range === 7, 'btn-secondary': range !== 7 }" (click)="changeRange(7)">7</button>
   </div>
+  <h4 *ngIf="semesterStart">Week {{ getWeek() }}</h4>
   <a class="btn btn-warning" routerLink="/schedule/edit" *ngIf="!canEdit">
     <i class="fas fa-pencil-alt"></i>
   </a>
@@ -14,40 +15,41 @@
   <div *ngIf="day && day.events.length > 0">
     <div *ngIf="!todayOnly || (todayOnly && getWeekDay() === labels[day.weekday])">
       <div class="card mb-4">
-        <div class="card-header" *ngIf="todayOnly && semesterStart">
-          <i class="fas fa-calendar-alt mr-1"></i> {{ labels[day.weekday] }} - W{{ getWeek() + 1}}
+        <div class="card-header" *ngIf="semesterStart">
+          <i class="fas fa-calendar-alt mr-1"></i> {{ labels[day.weekday] }} <span *ngIf="todayOnly">- W{{ getWeek()}}</span>
         </div>
         <div class="card-body">
-          <div class="card-title" *ngIf="!todayOnly">
-            <h4>{{ labels[day.weekday] }}</h4>
-          </div>
           <div *ngIf="day.events.length > 0">
-            <div class="card mb-2" *ngFor="let event of day.events" [ngStyle]="{ 'background-color': getCourseColor(event) }">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <span class="font-weight-bold">{{ event.name }}</span>
-                    <br> {{ getCourseCode(event) }} <span *ngIf="event.crn">- CRN: {{ event.crn }}</span>
-                    <br>
-                    <span *ngIf="event.biweekly">Week {{ event.week }}</span>
-                  </div>
-                  <div class="col text-right">
-                    <div [ngClass]="{ 'row': canEdit }">
-                      <div [ngClass]="{ 'col': canEdit }">
-                        <i class="fas fa-clock"></i>
-                        {{ timestringToDate(event.start) | date:'shortTime' }} - {{ timestringToDate(event.end) | date:'shortTime' }}
+            <div *ngFor="let event of day.events">
+              <div class="card mb-2" [ngStyle]="{ 'background-color': courses?.length > 0 ? getCourseColor(event) : '' }" *ngIf="canEdit || isSameWeek(event)">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <span class="font-weight-bold">{{ event.name }}</span>
+                      <br>
+                      <!--{{ getCourseCode(event) }} -->
+                      <span *ngIf="event.crn">- CRN: {{ event.crn }}</span>
+                      <br>
+                      <span *ngIf="event.biweekly">Week {{ event.week }}</span>
+                    </div>
+                    <div class="col text-right">
+                      <div [ngClass]="{ 'row': canEdit }">
+                        <div [ngClass]="{ 'col': canEdit }">
+                          <i class="fas fa-clock"></i>
+                          {{ timestringToDate(event.start) | date:'shortTime' }} - {{ timestringToDate(event.end) | date:'shortTime' }}
 
-                        <br>
-                        <i class="fas fa-map-marker-alt"></i>
-                        {{ event.location }}
-                      </div>
-                      <div class="col" *ngIf="canEdit === true">
-                        <button class="btn btn-block btn-warning" (click)="onEdit(event)">
-                          <i class="fas fa-pencil-alt"></i>
-                        </button>
-                        <button class="btn btn-block btn-danger" (click)="onDelete(event)">
-                          <i class="fas fa-times"></i>
-                        </button>
+                          <br>
+                          <i class="fas fa-map-marker-alt"></i>
+                          {{ event.location }}
+                        </div>
+                        <div class="col" *ngIf="canEdit === true">
+                          <button class="btn btn-block btn-warning" (click)="onEdit(event)">
+                            <i class="fas fa-pencil-alt"></i>
+                          </button>
+                          <button class="btn btn-block btn-danger" (click)="onDelete(event)">
+                            <i class="fas fa-times"></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>

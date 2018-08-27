@@ -3,3 +3,20 @@
 </h2>
 <app-link-settings></app-link-settings>
 <app-course-settings></app-course-settings>
+<div class="card mt-3">
+  <div class="card-header">
+    Semester Start Date
+  </div>
+  <div class="card-body">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+      <div class="form-group">
+        <label for="start">Semester Start Date</label>
+        <input type="text" class="form-control" name="start" #startDate="ngModel" [(ngModel)]="start" [ngClass]="{'is-invalid': startDate.errors && startDate.touched}"
+          required pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}">
+        <div class="invalid-feedback" [hidden]="!startDate.errors?.required">Start date is required</div>
+        <div class="invalid-feedback" [hidden]="!startDate.errors?.pattern">Invalid Date (ex. MM/DD/YYYY)</div>
+      </div>
+      <input type="submit" class="btn btn-block btn-warning" value="Update Date" />
+    </form>
+  </div>
+</div>
