@@ -1,5 +1,6 @@
 <!-- <hr> -->
 <h5>{{ title }}</h5>
+<div class="card"></div>
 <div *ngIf="todos?.length > 0;else noTodos">
   <div class="card bg-primary mb-2" *ngFor="let todo of todos">
     <div class="card-body">
@@ -17,7 +18,7 @@
                 {{ todo.duedate | date }}
                 <br>
                 <i class="fas fa-clock"></i>
-                {{ todo.duedate | date:'shortTime' }}
+                {{ todo.duedate + ' ' + todo.duetime | date:'shortTime' }}
               </div>
               <div class="col-sm-4 text-right" *ngIf="canEdit === true">
                 <button class="btn btn-danger btn-block" (click)="onDelete(todo)">

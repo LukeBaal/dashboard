@@ -6,4 +6,6 @@ export interface Event {
   day: number;
   start: string;
   end: string;
+  biweekly?: boolean;
+  week?: string;
 }

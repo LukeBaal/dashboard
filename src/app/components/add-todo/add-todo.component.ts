@@ -3,6 +3,8 @@ import { TodoService } from '../../services/todo.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Todo } from '../../model/Todo';
 import { Router } from '@angular/router';
+import { CourseService } from '../../services/course.service';
+import { Course } from '../../model/Course';
 
 @Component({
   selector: 'app-add-todo',
@@ -13,18 +15,24 @@ export class AddTodoComponent implements OnInit {
   todo: Todo = {
     course: '',
     name: '',
-    duedate: ''
+    duedate: '',
+    duetime: '23:59'
   };
-  duedate: string;
-  duetime = '23:59';
+
+  courses: Course[];
 
   constructor(
     private todoService: TodoService,
+    private courseService: CourseService,
     private flashMessage: FlashMessagesService,
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.courseService.getCourses().subscribe(courses => {
+      this.courses = courses;
+    });
+  }
 
   onSubmit({ value, valid }: { value: Todo; valid: boolean }) {
     if (!valid) {
@@ -35,7 +43,6 @@ export class AddTodoComponent implements OnInit {
       });
     } else {
       // Add new todo
-      value.duedate = new Date(`${this.duedate} ${this.duetime}`).toString();
       this.todoService.newTodo(value);
       // Show message
       this.flashMessage.show('New todo added', {

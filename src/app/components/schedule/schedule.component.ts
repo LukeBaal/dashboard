@@ -66,17 +66,6 @@ export class ScheduleComponent implements OnInit {
           })
         };
 
-        // this.schedule[i].events.filter(event => {
-        //   if (event.biweekly) {
-        //     if (parseInt(event.week) === this.getWeek() + 1) {
-        //       return true;
-        //     } else {
-        //       return false;
-        //     }
-        //   } else {
-        //     return true;
-        //   }
-        // });
         this.days[i] = this.schedule[i];
 
         const today = new Date().getDay();
@@ -143,7 +132,7 @@ export class ScheduleComponent implements OnInit {
     return (weekCount % 2) + 1;
   }
 
-  isSameWeek(event): boolean {
+  isSameWeek(event: Event): boolean {
     if (event.biweekly) {
       const thisWeek = this.getWeek();
       const week = parseInt(event.week);
@@ -153,7 +142,7 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
-  getCourseCode(event): string {
+  getCourseCode(event: Event): string {
     const courses = this.courses.filter(course =>
       event.name.includes(course.name)
     );
@@ -161,11 +150,10 @@ export class ScheduleComponent implements OnInit {
     return courses.length > 0 ? courses[0].code : '';
   }
 
-  getCourseColor(event): string {
+  getCourseColor(event: Event): string {
     const courses = this.courses.filter(course =>
       event.name.includes(course.name)
     );
-
-    return courses.length > 0 ? courses[0].color : '';
+    return courses.length > 0 ? courses[0].color : 'default';
   }
 }
