@@ -56,8 +56,10 @@ export class TodoComponent implements OnInit {
           sortedTodos.future.push(todo);
         }
       });
-      for (let key in sortedTodos) {
-        sortedTodos[key] = this.sortByDate(sortedTodos[key]);
+      for (const key in sortedTodos) {
+        if (sortedTodos.hasOwnProperty(key)) {
+          sortedTodos[key] = this.sortByDate(sortedTodos[key]);
+        }
       }
       this.todos = sortedTodos;
     });
@@ -68,7 +70,7 @@ export class TodoComponent implements OnInit {
       const dateA = new Date(`${a.duedate} ${a.duetime}`);
       const dateB = new Date(`${b.duedate} ${b.duetime}`);
       return dateA.valueOf() - dateB.valueOf();
-    })
+    });
   }
 
   onDeleteEvent(todo: Todo) {
@@ -88,6 +90,6 @@ export class TodoComponent implements OnInit {
     const day = 1000 * 60 * 60 * 24;
 
     const diff = dueDate.valueOf() - today.valueOf();
-    return Math.floor(diff / day);
+    return Math.ceil(diff / day);
   }
 }
