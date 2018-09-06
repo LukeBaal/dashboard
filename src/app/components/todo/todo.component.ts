@@ -21,6 +21,9 @@ export class TodoComponent implements OnInit {
   @Input()
   canEdit = true;
 
+  @Input()
+  showFuture = true;
+
   constructor(
     private flashMessage: FlashMessagesService,
     private todoService: TodoService
@@ -53,8 +56,19 @@ export class TodoComponent implements OnInit {
           sortedTodos.future.push(todo);
         }
       });
+      for (let key in sortedTodos) {
+        sortedTodos[key] = this.sortByDate(sortedTodos[key]);
+      }
       this.todos = sortedTodos;
     });
+  }
+
+  sortByDate(todos: Todo[]): Todo[] {
+    return todos.sort((a, b) => {
+      const dateA = new Date(`${a.duedate} ${a.duetime}`);
+      const dateB = new Date(`${b.duedate} ${b.duetime}`);
+      return dateA.valueOf() - dateB.valueOf();
+    })
   }
 
   onDeleteEvent(todo: Todo) {
