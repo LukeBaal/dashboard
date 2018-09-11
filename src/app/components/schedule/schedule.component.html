@@ -21,7 +21,7 @@
         <div class="card-body">
           <div *ngIf="day.events.length > 0">
             <div *ngFor="let event of day.events">
-              <div class="card mb-2" [ngStyle]="{ 'background-color': courses?.length > 0 ? getCourseColor(event) : '' }" *ngIf="canEdit || isSameWeek(event)">
+              <div class="card mb-2" [ngStyle]="{ 'background-color': courses?.length > 0 ? getCourseColor(event) : '' }" *ngIf="canEdit == true || isSameWeek(event) == true">
                 <div class="card-body">
                   <div class="row">
                     <div class="col">

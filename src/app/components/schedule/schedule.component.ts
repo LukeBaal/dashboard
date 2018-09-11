@@ -60,8 +60,8 @@ export class ScheduleComponent implements OnInit {
         this.schedule[i] = {
           weekday: i,
           events: schedule.sort((a, b) => {
-            const timeA = parseInt(a.start.replace(':', ''));
-            const timeB = parseInt(b.start.replace(':', ''));
+            const timeA = parseInt(a.start.replace(':', ''), 10);
+            const timeB = parseInt(b.start.replace(':', ''), 10);
             return timeA - timeB;
           })
         };
@@ -95,7 +95,7 @@ export class ScheduleComponent implements OnInit {
 
   onDelete(event) {
     if (confirm('Are you sure?')) {
-      this.scheduleService.deleteEvent(parseInt(event.day), event);
+      this.scheduleService.deleteEvent(parseInt(event.day, 10), event);
       this.flashMessage.show('Event deleted', {
         cssClass: 'alert-success',
         timeout: 4000
@@ -110,8 +110,8 @@ export class ScheduleComponent implements OnInit {
   timestringToDate(timestring: string): Date {
     const date = new Date();
     date.setHours(
-      parseInt(timestring.slice(0, 2)),
-      parseInt(timestring.slice(3))
+      parseInt(timestring.slice(0, 2), 10),
+      parseInt(timestring.slice(3), 10)
     );
     return date;
   }
@@ -135,7 +135,7 @@ export class ScheduleComponent implements OnInit {
   isSameWeek(event: Event): boolean {
     if (event.biweekly) {
       const thisWeek = this.getWeek();
-      const week = parseInt(event.week);
+      const week = parseInt(event.week, 10);
       return thisWeek === week;
     } else {
       return true;
