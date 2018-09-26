@@ -50,7 +50,7 @@ export class TodoComponent implements OnInit {
           sortedTodos.today.push(todo);
         } else if (days === 1) {
           sortedTodos.tomorrow.push(todo);
-        } else if (days < 7) {
+        } else if (days < 14) {
           sortedTodos.thisWeek.push(todo);
         } else {
           sortedTodos.future.push(todo);
