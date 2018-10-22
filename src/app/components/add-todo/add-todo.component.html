@@ -8,7 +8,6 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="name">Course</label>
-            <!-- <input type="text" class="form-control" name="course" [(ngModel)]="todo.course"> -->
             <select name="course" class="custom-select" [(ngModel)]="todo.course">
               <option selected></option>
               <option [value]="course.name" *ngFor="let course of courses">{{ course.name }}</option>
@@ -36,7 +35,7 @@
       </div>
 
 
-      <input type="submit" value="Add Todo" class="btn btn-success btn-block">
+      <input type="submit" [value]="edit ? 'Edit Todo' : 'Add Todo'" [ngClass]="{'btn-warning': edit, 'btn-success': !edit}" class="btn btn-success btn-block">
     </form>
   </div>
 </div>

@@ -21,9 +21,14 @@
                 {{ todo.duedate + ' ' + todo.duetime | date:'shortTime' }}
               </div>
               <div class="col-sm-4 text-right" *ngIf="canEdit === true">
-                <button class="btn btn-danger btn-block" (click)="onDelete(todo)">
-                  <i class="fas fa-times"></i>
-                </button>
+                <div class="btn-group" role="group">
+                  <button class="btn btn-warning" (click)="onEdit(todo)">
+                    <i class="fa fa-pencil-alt"></i>
+                  </button>
+                  <button class="btn btn-danger" (click)="onDelete(todo)">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

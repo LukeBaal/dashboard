@@ -15,6 +15,7 @@ export class TodoComponent implements OnInit {
     today: Todo[];
     tomorrow: Todo[];
     thisWeek: Todo[];
+    nextWeek: Todo[];
     future: Todo[];
   };
 
@@ -39,6 +40,7 @@ export class TodoComponent implements OnInit {
       today: [],
       tomorrow: [],
       thisWeek: [],
+      nextWeek: [],
       future: []
     };
     this.todoService.getTodos().subscribe(todos => {
@@ -50,8 +52,10 @@ export class TodoComponent implements OnInit {
           sortedTodos.today.push(todo);
         } else if (days === 1) {
           sortedTodos.tomorrow.push(todo);
-        } else if (days < 14) {
+        } else if (days < 7) {
           sortedTodos.thisWeek.push(todo);
+        } else if (days < 14) {
+          sortedTodos.nextWeek.push(todo);
         } else {
           sortedTodos.future.push(todo);
         }
@@ -74,7 +78,7 @@ export class TodoComponent implements OnInit {
   }
 
   onDeleteEvent(todo: Todo) {
-    if (confirm('Are you sure?')) {
+    if (confirm(`Are you sure you want to delete ${todo.course} ${todo.name}?`)) {
       this.todoService.deleteTodo(todo);
       this.getTodos();
       this.flashMessage.show('Todo deleted', {

@@ -6,7 +6,8 @@
     <app-todo-table title="Overdue" [todos]="todos?.overdue" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.overdue.length > 0"></app-todo-table>
     <app-todo-table title="Today" [todos]="todos?.today" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.today.length > 0"></app-todo-table>
     <app-todo-table title="Tomorrow" [todos]="todos?.tomorrow" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.tomorrow.length > 0"></app-todo-table>
-    <app-todo-table title="Next 2 Weeks" [todos]="todos?.thisWeek" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.thisWeek.length > 0"></app-todo-table>
+    <app-todo-table title="This Week" [todos]="todos?.thisWeek" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.thisWeek.length > 0"></app-todo-table>
+    <app-todo-table title="Next Week" [todos]="todos?.nextWeek" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="todos?.nextWeek.length > 0"></app-todo-table>
     <app-todo-table title="Future" [todos]="todos?.future" [canEdit]="canEdit" (deleteEvent)="onDeleteEvent($event)" *ngIf="showFuture === true && todos?.future.length > 0"></app-todo-table>
 
     <button class="mt-2 btn btn-success btn-block" routerLink="/todo/add" *ngIf="canEdit === true">

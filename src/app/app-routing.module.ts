@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'todo', component: TodoComponent, canActivate: [AuthGuard] },
   { path: 'todo/add', component: AddTodoComponent, canActivate: [AuthGuard] },
+  { path: 'todo/add/:id', component: AddTodoComponent, canActivate: [AuthGuard] },
   {
     path: 'schedule',
     component: ScheduleComponent,
