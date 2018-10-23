@@ -20,9 +20,13 @@ export class TodoTableComponent implements OnInit {
   @Output()
   deleteEvent: EventEmitter<Todo> = new EventEmitter();
 
+  showDate: boolean;
+
   constructor(private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.showDate = this.title === 'Next Week' || this.title === 'Future';
+  }
 
   onEdit(todo: Todo) {
     this.router.navigate(['todo/add', todo.id]);

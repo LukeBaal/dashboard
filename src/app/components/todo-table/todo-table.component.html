@@ -1,4 +1,3 @@
-<!-- <hr> -->
 <h5>{{ title }}</h5>
 <div class="card"></div>
 <div *ngIf="todos?.length > 0;else noTodos">
@@ -15,7 +14,12 @@
             <div [ngClass]="{ 'row': canEdit === true }">
               <div [ngClass]="{ 'col-sm-8': canEdit === true }">
                 <i class="fas fa-calendar-alt"></i>
-                {{ todo.duedate | date }}
+                <span *ngIf="showDate">
+                  {{ todo.duedate | date}}
+                </span>
+                <span *ngIf="!showDate">
+                  {{ todo.duedate | date:'EEEE' }}
+                </span>
                 <br>
                 <i class="fas fa-clock"></i>
                 {{ todo.duedate + ' ' + todo.duetime | date:'shortTime' }}
