@@ -35,4 +35,13 @@ export class TodoTableComponent implements OnInit {
   onDelete(todo: Todo) {
     this.deleteEvent.emit(todo);
   }
+
+  timestringToDate(timestring: string): Date {
+    const date = new Date();
+    date.setHours(
+      parseInt(timestring.slice(0, 2), 10),
+      parseInt(timestring.slice(3), 10)
+    );
+    return date;
+  }
 }

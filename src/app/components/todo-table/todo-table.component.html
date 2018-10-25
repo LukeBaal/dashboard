@@ -22,7 +22,7 @@
                 </span>
                 <br>
                 <i class="fas fa-clock"></i>
-                {{ todo.duedate + ' ' + todo.duetime | date:'shortTime' }}
+                {{ timestringToDate(todo.duetime) | date:'shortTime' }}
               </div>
               <div class="col-sm-4 text-right" *ngIf="canEdit === true">
                 <div class="btn-group" role="group">
