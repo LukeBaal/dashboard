@@ -94,7 +94,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   onDelete(event) {
-    if (confirm('Are you sure?')) {
+    if (confirm(`Delete '${event.name}'?`)) {
       this.scheduleService.deleteEvent(parseInt(event.day, 10), event);
       this.flashMessage.show('Event deleted', {
         cssClass: 'alert-success',
@@ -105,6 +105,10 @@ export class ScheduleComponent implements OnInit {
 
   onEdit(event: Event) {
     this.editEvent.emit(event);
+  }
+
+  onWeekClick(week: number) {
+    console.log(week);
   }
 
   timestringToDate(timestring: string): Date {

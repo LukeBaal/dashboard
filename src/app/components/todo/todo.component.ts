@@ -78,7 +78,7 @@ export class TodoComponent implements OnInit {
   }
 
   onDeleteEvent(todo: Todo) {
-    if (confirm(`Are you sure you want to delete ${todo.course} ${todo.name}?`)) {
+    if (confirm(`Delete '${todo.course} ${todo.name}'?`)) {
       this.todoService.deleteTodo(todo);
       this.getTodos();
       this.flashMessage.show('Todo deleted', {
