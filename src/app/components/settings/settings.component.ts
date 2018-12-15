@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { User } from '../../model/User';
 import { UserService } from '../../services/user.service';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-settings',
@@ -9,7 +10,7 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-  start: string;
+  start: NgbDateStruct;
 
   constructor(
     private userService: UserService,
@@ -33,7 +34,7 @@ export class SettingsComponent implements OnInit {
       this.userService.updateUser(value);
       // Show message
       this.flashMessage.show('User start date set', {
-        cssClass: 'alert-success',
+        cssClass: 'alert-warning',
         timeout: 4000
       });
     }

@@ -1,0 +1,5 @@
+.user a {
+    cursor: default;
+
+    pointer-events: none;
+}

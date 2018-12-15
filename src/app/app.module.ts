@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -55,7 +56,8 @@ import { CourseSettingsComponent } from './components/course-settings/course-set
     AngularFireModule.initializeApp(environment.firebase, 'dashboard'),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

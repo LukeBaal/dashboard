@@ -3,11 +3,11 @@
     <img src="../../../assets/icons/dashboard-icon.svg" width="25" height="25" class="d-inline-block align-top bg-info rounded">ashboard
   </a> -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01"
-    aria-expanded="false" aria-label="Toggle navigation">
+    aria-expanded="false" aria-label="Toggle navigation" (click)="isNavbarCollapsed = !isNavbarCollapsed">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarColor01">
+  <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" routerLink="/">Summary
@@ -34,7 +34,7 @@
       <li *ngIf="!isLoggedIn" class="nav-item">
         <a routerLink="/login" class="nav-link">Login</a>
       </li>
-      <li *ngIf="isLoggedIn" class="nav-item">
+      <li *ngIf="isLoggedIn" class="nav-item user">
         <a href="#" class="nav-link">
           <div *ngIf="user.displayName">
             <img [src]="user.avatar" width="25" height="25" class="rounded-circle mr-1"> {{ user.displayName }}
