@@ -3,6 +3,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../model/Todo';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-todo',
@@ -89,11 +90,11 @@ export class TodoComponent implements OnInit {
   }
 
   daysLeft(date: string): number {
-    const today = new Date();
-    const dueDate = new Date(date);
-    const day = 1000 * 60 * 60 * 24;
+    const today = moment().startOf('days');
+    const dueDate = moment(date);
 
-    const diff = dueDate.valueOf() - today.valueOf();
-    return Math.ceil(diff / day);
+    const diff = dueDate.diff(today, 'days');
+
+    return diff;
   }
 }

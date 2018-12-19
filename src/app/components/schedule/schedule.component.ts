@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../model/Course';
 import { Event } from '../../model/Event';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-schedule',
@@ -21,7 +22,7 @@ export class ScheduleComponent implements OnInit {
   today: Event[];
 
   showBiweekly = true;
-  semesterStart: Date;
+  semesterStart: any;
 
   courses: Course[];
 
@@ -49,8 +50,8 @@ export class ScheduleComponent implements OnInit {
     });
 
     this.userService.getUser().subscribe(user => {
-      const startDate = new Date(user.start);
-      this.semesterStart = startDate;
+      this.semesterStart = moment(user.start);
+      this.semesterStart.subtract(1, 'months');
     });
 
     for (let i = 0; i < 7; i++) {
@@ -126,14 +127,13 @@ export class ScheduleComponent implements OnInit {
   }
 
   getWeek(): number {
-    const week = 1000 * 60 * 60 * 24 * 7;
-    const today = new Date();
+    const today = moment();
+    const diff = today
+      .startOf('day')
+      .startOf('week')
+      .diff(this.semesterStart.startOf('day').startOf('week'), 'weeks');
 
-    const diff = Math.abs(today.valueOf() - this.semesterStart.valueOf());
-
-    const weekCount = Math.floor(diff / week);
-
-    return (weekCount % 2) + 1;
+    return (Math.abs(diff) % 2) + 1;
   }
 
   isSameWeek(event: Event): boolean {
